@@ -1,0 +1,507 @@
+.nosotros {
+  background: var(--white);
+
+  // Hero Section
+  .hero-section {
+    position: relative;
+    height: 450px;
+    overflow: hidden;
+    border-radius: 0 0 48px 48px;
+
+    .hero-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--beige-light);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(255, 181, 167, 0.7), rgba(197, 206, 234, 0.6));
+      }
+    }
+
+    .hero-overlay {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-content {
+      text-align: center;
+      color: var(--white);
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+
+      h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        color: var(--white);
+        letter-spacing: -0.03em;
+      }
+
+      .hero-subtitle {
+        font-size: 1.5rem;
+        font-weight: 400;
+        color: var(--white);
+        opacity: 0.95;
+      }
+    }
+  }
+
+  // Section Headers
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h2 {
+      font-size: 2.5rem;
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+      font-weight: 800;
+    }
+
+    .section-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-gray);
+      margin-bottom: 1.5rem;
+    }
+
+    .decorative-line {
+      width: 120px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent));
+      margin: 0 auto;
+      border-radius: 50px;
+    }
+  }
+
+  // Historia Section
+  .historia-section {
+    padding: 4rem 0;
+    background: linear-gradient(180deg, var(--white) 0%, var(--secondary-light) 100%);
+
+    .historia-content {
+      max-width: 900px;
+      margin: 0 auto 4rem;
+      text-align: center;
+
+      p {
+        font-size: 1.125rem;
+        line-height: 1.9;
+        color: var(--text-dark);
+        white-space: pre-line;
+      }
+    }
+
+    .valores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+
+      .valor-card {
+        background: var(--white);
+        padding: 2.5rem 2rem;
+        border-radius: 24px;
+        text-align: center;
+        box-shadow: 0 4px 20px var(--shadow);
+        border: 1px solid var(--beige-light);
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 8px 28px var(--shadow-dark);
+        }
+
+        .valor-icono {
+          font-size: 3.5rem;
+          margin-bottom: 1rem;
+          line-height: 1;
+        }
+
+        h3 {
+          font-size: 1.25rem;
+          color: var(--primary-dark);
+          margin-bottom: 0.75rem;
+          font-weight: 700;
+        }
+
+        p {
+          font-size: 1rem;
+          color: var(--text-gray);
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+
+  // Fundadoras Section
+  .fundadoras-section {
+    padding: 5rem 0;
+    background: var(--white);
+
+    .fundadoras-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    .fundadora-card {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 3rem;
+      background: var(--beige-light);
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 6px 24px var(--shadow);
+      transition: all 0.3s ease;
+
+      &:hover {
+        box-shadow: 0 12px 36px var(--shadow-dark);
+      }
+
+      &:nth-child(even) {
+        grid-template-columns: 1fr 400px;
+
+        .fundadora-imagen-container {
+          order: 2;
+        }
+      }
+
+      .fundadora-imagen-container {
+        position: relative;
+        min-height: 500px;
+
+        .fundadora-imagen {
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          background-position: center;
+          background-color: var(--beige);
+          position: relative;
+
+          .imagen-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--pastel-blue) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            opacity: 0.9;
+
+            .imagen-placeholder {
+              font-size: 5rem;
+              margin-bottom: 1rem;
+            }
+
+            p {
+              font-size: 1.25rem;
+              font-weight: 600;
+              color: var(--white);
+            }
+          }
+        }
+      }
+
+      .fundadora-info {
+        padding: 3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h3 {
+          font-size: 2.5rem;
+          color: var(--primary-dark);
+          margin-bottom: 0.5rem;
+          font-weight: 800;
+        }
+
+        .fundadora-rol {
+          font-size: 1.125rem;
+          color: var(--primary-color);
+          font-weight: 700;
+          margin-bottom: 1.5rem;
+          font-style: italic;
+        }
+
+        .fundadora-descripcion {
+          font-size: 1.0625rem;
+          line-height: 1.8;
+          color: var(--text-dark);
+          white-space: pre-line;
+          margin-bottom: 2rem;
+        }
+
+        .certificado-section {
+          margin-top: 2rem;
+          padding-top: 2rem;
+          border-top: 2px solid var(--beige);
+
+          h4 {
+            font-size: 1.25rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-weight: 700;
+          }
+
+          .certificado-preview {
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px var(--shadow);
+            transition: all 0.3s ease;
+
+            &:hover {
+              transform: scale(1.02);
+              box-shadow: 0 8px 24px var(--shadow-dark);
+
+              .certificado-overlay {
+                background: rgba(255, 181, 167, 0.75);
+              }
+            }
+
+            .certificado-imagen {
+              width: 100%;
+              height: 250px;
+              background-size: cover;
+              background-position: center;
+              background-color: var(--beige-dark);
+              position: relative;
+
+              .certificado-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 181, 167, 0.85);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: var(--white);
+                transition: all 0.3s ease;
+
+                .certificado-icon {
+                  font-size: 3.5rem;
+                  margin-bottom: 0.5rem;
+                }
+
+                p {
+                  font-size: 1.125rem;
+                  font-weight: 700;
+                  color: var(--white);
+                }
+              }
+            }
+          }
+
+          .btn-certificado {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .mensaje-especial {
+      background: linear-gradient(135deg, var(--pastel-peach) 0%, var(--pastel-mint) 100%);
+      border-radius: 32px;
+      padding: 3rem;
+      box-shadow: 0 6px 28px var(--shadow);
+      margin-top: 3rem;
+
+      .mensaje-contenido {
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+
+        .mensaje-icono {
+          font-size: 4rem;
+          margin-bottom: 1.5rem;
+          animation: float 3s ease-in-out infinite;
+        }
+
+        h3 {
+          font-size: 2rem;
+          color: var(--primary-dark);
+          margin-bottom: 1.5rem;
+          font-weight: 800;
+        }
+
+        p {
+          font-size: 1.125rem;
+          line-height: 1.9;
+          color: var(--text-dark);
+          margin-bottom: 1.5rem;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+
+  // CTA Section
+  .cta-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--pastel-blue) 100%);
+    text-align: center;
+
+    .cta-content {
+      h2 {
+        font-size: 2.5rem;
+        color: var(--white);
+        margin-bottom: 1rem;
+        font-weight: 800;
+      }
+
+      p {
+        font-size: 1.25rem;
+        color: var(--white);
+        margin-bottom: 2.5rem;
+        opacity: 0.95;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        a {
+          min-width: 200px;
+        }
+      }
+    }
+  }
+
+  // Animation
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  // Responsive
+  @media (max-width: 968px) {
+    .hero-section {
+      height: 350px;
+
+      .hero-content {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1.125rem;
+        }
+      }
+    }
+
+    .fundadora-card {
+      grid-template-columns: 1fr !important;
+
+      .fundadora-imagen-container {
+        order: 1 !important;
+        min-height: 350px;
+      }
+
+      .fundadora-info {
+        padding: 2rem;
+      }
+    }
+
+    .valores-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .section-header {
+      h2 {
+        font-size: 2rem;
+      }
+    }
+
+    .historia-section {
+      .historia-content p {
+        font-size: 1rem;
+      }
+    }
+
+    .fundadora-card {
+      .fundadora-info {
+        h3 {
+          font-size: 2rem;
+        }
+
+        .fundadora-rol {
+          font-size: 1rem;
+        }
+
+        .fundadora-descripcion {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .mensaje-especial {
+      padding: 2rem;
+
+      .mensaje-contenido {
+        h3 {
+          font-size: 1.5rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .cta-section {
+      .cta-content {
+        h2 {
+          font-size: 1.75rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+          align-items: center;
+
+          a {
+            width: 100%;
+            max-width: 300px;
+          }
+        }
+      }
+    }
+  }
+}

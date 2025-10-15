@@ -1,0 +1,121 @@
+<section class="nosotros">
+  <!-- Hero Section con foto del local -->
+  <div class="hero-section">
+    <div class="hero-overlay">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Conoce Nuestra Historia</h1>
+          <p class="hero-subtitle">Un sueño hecho realidad impulsado por el amor a los animales</p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image" [style.background-image]="'url(' + fotoLocal + ')'"></div>
+  </div>
+
+  <!-- Sección de Historia y Propósito -->
+  <div class="historia-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>{{ historia.titulo }}</h2>
+        <div class="decorative-line"></div>
+      </div>
+
+      <div class="historia-content">
+        <p>{{ historia.descripcion }}</p>
+      </div>
+
+      <!-- Valores -->
+      <div class="valores-grid">
+        @for (valor of valores; track valor.titulo) {
+          <div class="valor-card">
+            <div class="valor-icono">{{ valor.icono }}</div>
+            <h3>{{ valor.titulo }}</h3>
+            <p>{{ valor.descripcion }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección de Fundadoras -->
+  <div class="fundadoras-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Nuestras Fundadoras</h2>
+        <p class="section-subtitle">El corazón detrás de Charly's Estética Canina</p>
+        <div class="decorative-line"></div>
+      </div>
+
+      <div class="fundadoras-container">
+        @for (fundadora of fundadoras; track fundadora.nombre) {
+          <div class="fundadora-card">
+            <div class="fundadora-imagen-container">
+              <div class="fundadora-imagen" [style.background-image]="'url(' + fundadora.foto + ')'">
+                <div class="imagen-overlay">
+                  <span class="imagen-placeholder">📷</span>
+                  <p>Foto de {{ fundadora.nombre }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="fundadora-info">
+              <h3>{{ fundadora.nombre }}</h3>
+              <p class="fundadora-rol">{{ fundadora.rol }}</p>
+              <p class="fundadora-descripcion">{{ fundadora.descripcion }}</p>
+
+              @if (fundadora.certificado) {
+                <div class="certificado-section">
+                  <h4>Certificación Profesional</h4>
+                  <div class="certificado-preview" (click)="verCertificado(fundadora.certificado)">
+                    <div class="certificado-imagen" [style.background-image]="'url(' + fundadora.certificado + ')'">
+                      <div class="certificado-overlay">
+                        <span class="certificado-icon">🏆</span>
+                        <p>Ver Certificado</p>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn-secondary btn-certificado" (click)="verCertificado(fundadora.certificado)">
+                    Ver Certificado Completo
+                  </button>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Mensaje especial sobre Karla y Mikeila -->
+      <div class="mensaje-especial">
+        <div class="mensaje-contenido">
+          <div class="mensaje-icono">🐾</div>
+          <h3>Una Historia de Amor Incondicional</h3>
+          <p>
+            La llegada de Mikeila a la vida de Karla no solo trajo alegría y compañía, sino que también
+            encendió una pasión que se convertiría en su proyecto de vida. Mikeila fue el punto de
+            inflexión que inspiró a Karla a certificarse profesionalmente y crear un espacio donde cada
+            mascota pudiera recibir el mismo amor y cuidado que ella brinda a su compañera peluda.
+          </p>
+          <p>
+            Hoy, juntas lideran Charly's Estética Canina, demostrando que cuando el amor por los animales
+            se combina con dedicación profesional, se pueden crear experiencias extraordinarias para nuestros
+            mejores amigos de cuatro patas.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>¿Listo para darle a tu mascota el mejor cuidado?</h2>
+        <p>Agenda una cita y conoce la diferencia de un servicio hecho con amor</p>
+        <div class="cta-buttons">
+          <a routerLink="/citas" class="btn-primary">Agendar Cita</a>
+          <a routerLink="/servicios" class="btn-secondary">Ver Servicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

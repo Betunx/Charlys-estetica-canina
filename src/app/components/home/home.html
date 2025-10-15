@@ -1,0 +1,80 @@
+<div class="home">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Bienvenidos a<br>
+          <span class="brand">Charly's</span><br>
+          Estética Canina
+        </h1>
+        <p class="hero-subtitle">
+          El mejor cuidado para tu mejor amigo. Servicios profesionales de grooming y estética canina.
+        </p>
+        <div class="hero-buttons">
+          <button class="btn-primary" routerLink="/servicios">Ver Servicios</button>
+          <button class="btn-secondary" routerLink="/contacto">Agendar Cita</button>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-placeholder">
+          🐕
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Características -->
+  <section class="caracteristicas">
+    <div class="container">
+      <h2 class="section-title">¿Por qué elegirnos?</h2>
+      <div class="caracteristicas-grid">
+        @for (caracteristica of caracteristicas; track caracteristica.titulo) {
+          <div class="caracteristica-card">
+            <div class="caracteristica-icono">{{ caracteristica.icono }}</div>
+            <h3>{{ caracteristica.titulo }}</h3>
+            <p>{{ caracteristica.descripcion }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios Destacados -->
+  <section class="servicios-destacados">
+    <div class="container">
+      <h2 class="section-title">Servicios Destacados</h2>
+      <p class="section-subtitle">Conoce nuestros servicios más populares</p>
+      <div class="servicios-grid">
+        @for (servicio of serviciosDestacados; track servicio.titulo) {
+          <div class="servicio-destacado-card">
+            <div class="servicio-icono">{{ servicio.icono }}</div>
+            <h3>{{ servicio.titulo }}</h3>
+            <p class="servicio-descripcion">{{ servicio.descripcion }}</p>
+            <div class="servicio-precio">
+              <span class="desde">Desde</span>
+              <span class="precio">${{ servicio.precio }}</span>
+            </div>
+          </div>
+        }
+      </div>
+      <div class="servicios-cta">
+        <button class="btn-primary" routerLink="/servicios">Ver Todos los Servicios</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>¿Listo para consentir a tu mascota?</h2>
+        <p>Agenda tu cita ahora y dale a tu mejor amigo el cuidado que merece</p>
+        <div class="cta-buttons">
+          <button class="btn-primary" routerLink="/contacto">Agendar Cita</button>
+          <button class="btn-secondary" routerLink="/galeria">Ver Galería</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

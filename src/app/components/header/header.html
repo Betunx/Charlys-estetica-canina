@@ -1,0 +1,25 @@
+<header class="header">
+  <div class="container">
+    <nav class="navbar">
+      <div class="logo">
+        <a routerLink="/">
+          <h2>Charly's</h2>
+          <span class="subtitle">Estética Canina</span>
+        </a>
+      </div>
+
+      <button class="menu-toggle" (click)="toggleMenu()" [attr.aria-expanded]="isMenuOpen()">
+        <span class="hamburger" [class.open]="isMenuOpen()"></span>
+      </button>
+
+      <ul class="nav-menu" [class.active]="isMenuOpen()">
+        <li><a routerLink="/" (click)="closeMenu()">Inicio</a></li>
+        <li><a routerLink="/nosotros" (click)="closeMenu()">Nosotros</a></li>
+        <li><a routerLink="/servicios" (click)="closeMenu()">Servicios</a></li>
+        <li><a routerLink="/galeria" (click)="closeMenu()">Galería</a></li>
+        <li><a routerLink="/citas" (click)="closeMenu()" class="btn-cita">Agendar Cita</a></li>
+        <li><a routerLink="/contacto" (click)="closeMenu()">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>

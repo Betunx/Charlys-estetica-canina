@@ -1,0 +1,131 @@
+<section class="citas">
+  <div class="container">
+    <div class="section-header">
+      <h1>Agendar Cita</h1>
+      <p>Selecciona el día y hora que mejor te convenga</p>
+    </div>
+
+    <div class="citas-grid">
+      <!-- Calendario -->
+      <div class="calendario-container">
+        <div class="calendario-header">
+          <button class="btn-mes" (click)="mesAnterior()">
+            <span>←</span>
+          </button>
+          <h2 class="mes-nombre">{{ nombreMes() }}</h2>
+          <button class="btn-mes" (click)="mesSiguiente()">
+            <span>→</span>
+          </button>
+        </div>
+
+        <div class="calendario-dias-semana">
+          <div class="dia-semana">Dom</div>
+          <div class="dia-semana">Lun</div>
+          <div class="dia-semana">Mar</div>
+          <div class="dia-semana">Mié</div>
+          <div class="dia-semana">Jue</div>
+          <div class="dia-semana">Vie</div>
+          <div class="dia-semana">Sáb</div>
+        </div>
+
+        <div class="calendario-grid">
+          @for (dia of diasCalendario(); track dia.numero) {
+            <div
+              [class]="obtenerClaseDia(dia)"
+              (click)="seleccionarDia(dia)"
+            >
+              @if (dia.numero > 0) {
+                <span class="dia-numero">{{ dia.numero }}</span>
+                @if (dia.disponibilidad === 'disponible') {
+                  <span class="dia-estado">✓</span>
+                }
+                @if (dia.disponibilidad === 'medio') {
+                  <span class="dia-estado">~</span>
+                }
+                @if (dia.disponibilidad === 'lleno') {
+                  <span class="dia-estado">✕</span>
+                }
+              }
+            </div>
+          }
+        </div>
+
+        <div class="leyenda">
+          <div class="leyenda-item">
+            <div class="leyenda-color dia-disponible"></div>
+            <span>Disponible</span>
+          </div>
+          <div class="leyenda-item">
+            <div class="leyenda-color dia-medio"></div>
+            <span>Medio lleno</span>
+          </div>
+          <div class="leyenda-item">
+            <div class="leyenda-color dia-lleno"></div>
+            <span>Lleno</span>
+          </div>
+          <div class="leyenda-item">
+            <div class="leyenda-color dia-cerrado"></div>
+            <span>Cerrado</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selección de hora y confirmación -->
+      <div class="seleccion-container">
+        @if (diaSeleccionado()) {
+          <div class="hora-seleccion">
+            <h3>Selecciona una hora</h3>
+            <p class="fecha-seleccionada">
+              {{ diaSeleccionado()!.fecha.toLocaleDateString('es-MX', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              }) }}
+            </p>
+
+            <div class="horas-grid">
+              @for (hora of diaSeleccionado()!.horas; track hora) {
+                <button
+                  class="hora-btn"
+                  [class.hora-seleccionada]="horaSeleccionada() === hora"
+                  (click)="seleccionarHora(hora)"
+                >
+                  {{ hora }}
+                </button>
+              }
+            </div>
+
+            @if (horaSeleccionada()) {
+              <div class="confirmacion">
+                <div class="resumen-cita">
+                  <h4>Resumen de tu cita</h4>
+                  <p>
+                    <strong>Fecha:</strong>
+                    {{ diaSeleccionado()!.fecha.toLocaleDateString('es-MX', {
+                      weekday: 'long',
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric'
+                    }) }}
+                  </p>
+                  <p><strong>Hora:</strong> {{ horaSeleccionada() }}</p>
+                </div>
+
+                <button class="btn-primary btn-agendar" (click)="agendarCita()">
+                  Confirmar por WhatsApp
+                </button>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="placeholder-seleccion">
+            <div class="placeholder-icon">📅</div>
+            <h3>Selecciona un día disponible</h3>
+            <p>Elige una fecha del calendario para ver los horarios disponibles</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

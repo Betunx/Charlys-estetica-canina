@@ -1,0 +1,323 @@
+.citas {
+  background: linear-gradient(135deg, var(--secondary-light) 0%, var(--white) 100%);
+  min-height: 80vh;
+  padding: 3rem 0;
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h1 {
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+      text-transform: capitalize;
+    }
+
+    p {
+      color: var(--text-gray);
+      font-size: 1.125rem;
+    }
+  }
+
+  .citas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    @media (max-width: 968px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .calendario-container {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px var(--shadow);
+    border: 1px solid var(--beige-light);
+  }
+
+  .calendario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    .mes-nombre {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      text-transform: capitalize;
+      margin: 0;
+    }
+
+    .btn-mes {
+      background: var(--beige-light);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      font-size: 1.25rem;
+      color: var(--primary-dark);
+
+      &:hover {
+        background: var(--primary-light);
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .calendario-dias-semana {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    .dia-semana {
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-gray);
+      font-size: 0.875rem;
+      padding: 0.5rem;
+    }
+  }
+
+  .calendario-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+
+    .dia-calendario {
+      aspect-ratio: 1;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      border: 2px solid transparent;
+
+      .dia-numero {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      .dia-estado {
+        font-size: 0.75rem;
+        position: absolute;
+        top: 4px;
+        right: 4px;
+      }
+
+      &.dia-vacio {
+        cursor: default;
+        background: transparent;
+      }
+
+      &.dia-disponible {
+        background: var(--pastel-mint);
+        color: var(--text-dark);
+
+        &:hover {
+          transform: scale(1.05);
+          border-color: var(--primary-color);
+        }
+      }
+
+      &.dia-medio {
+        background: var(--pastel-peach);
+        color: var(--text-dark);
+
+        &:hover {
+          transform: scale(1.05);
+          border-color: var(--primary-color);
+        }
+      }
+
+      &.dia-lleno {
+        background: var(--beige-dark);
+        color: var(--text-gray);
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+
+      &.dia-cerrado {
+        background: var(--beige-light);
+        color: var(--text-gray);
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+
+      &.dia-seleccionado {
+        border-color: var(--primary-dark) !important;
+        box-shadow: 0 0 0 3px var(--primary-light);
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .leyenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--beige-light);
+
+    .leyenda-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--text-gray);
+
+      .leyenda-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 8px;
+
+        &.dia-disponible {
+          background: var(--pastel-mint);
+        }
+
+        &.dia-medio {
+          background: var(--pastel-peach);
+        }
+
+        &.dia-lleno {
+          background: var(--beige-dark);
+        }
+
+        &.dia-cerrado {
+          background: var(--beige-light);
+        }
+      }
+    }
+  }
+
+  .seleccion-container {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px var(--shadow);
+    border: 1px solid var(--beige-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-seleccion {
+    text-align: center;
+    padding: 3rem 2rem;
+
+    .placeholder-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    h3 {
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: var(--text-gray);
+    }
+  }
+
+  .hora-seleccion {
+    width: 100%;
+
+    h3 {
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .fecha-seleccionada {
+      text-align: center;
+      color: var(--text-gray);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      text-transform: capitalize;
+    }
+
+    .horas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+
+      .hora-btn {
+        padding: 0.875rem 1rem;
+        background: var(--beige-light);
+        border: 2px solid transparent;
+        border-radius: 16px;
+        font-weight: 600;
+        color: var(--text-dark);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+
+        &:hover {
+          background: var(--primary-light);
+          transform: translateY(-2px);
+        }
+
+        &.hora-seleccionada {
+          background: var(--primary-color);
+          color: var(--white);
+          border-color: var(--primary-dark);
+          box-shadow: 0 4px 12px var(--shadow);
+        }
+      }
+    }
+  }
+
+  .confirmacion {
+    background: var(--beige-light);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+
+    .resumen-cita {
+      margin-bottom: 1.5rem;
+
+      h4 {
+        color: var(--primary-dark);
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      p {
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-transform: capitalize;
+
+        strong {
+          color: var(--primary-dark);
+        }
+      }
+    }
+
+    .btn-agendar {
+      width: 100%;
+      padding: 1rem 2rem;
+      font-size: 1.125rem;
+    }
+  }
+}

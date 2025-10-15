@@ -1,0 +1,125 @@
+<section class="contacto">
+  <div class="container">
+    <div class="section-header">
+      <h1>Contáctanos</h1>
+      <p>Estamos aquí para atender a tu mascota</p>
+    </div>
+
+    <div class="contacto-grid">
+      <!-- Información de Contacto -->
+      <div class="info-section">
+        <div class="info-card">
+          <h3>{{ infoContacto.nombre }}</h3>
+
+          <div class="info-item">
+            <div class="icono">📍</div>
+            <div class="info-content">
+              <strong>Dirección</strong>
+              <p>{{ infoContacto.direccion }}</p>
+              <p>{{ infoContacto.ciudad }}</p>
+            </div>
+          </div>
+
+          <div class="info-item clickable" (click)="llamar()">
+            <div class="icono">📞</div>
+            <div class="info-content">
+              <strong>Teléfono</strong>
+              <p>{{ infoContacto.telefono }}</p>
+            </div>
+          </div>
+
+          <div class="info-item clickable" (click)="enviarEmail()">
+            <div class="icono">📧</div>
+            <div class="info-content">
+              <strong>Email</strong>
+              <p>{{ infoContacto.email }}</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="icono">🕒</div>
+            <div class="info-content">
+              <strong>Horario de Atención</strong>
+              @for (horario of infoContacto.horario; track horario.dias) {
+                <p>
+                  <span class="dias">{{ horario.dias }}:</span>
+                  <span class="horas">{{ horario.horas }}</span>
+                </p>
+              }
+            </div>
+          </div>
+
+          <div class="botones-accion">
+            <button class="btn-primary" (click)="abrirWhatsApp()">
+              💬 WhatsApp
+            </button>
+            <button class="btn-secondary" (click)="abrirMaps()">
+              🗺️ Abrir en Maps
+            </button>
+          </div>
+
+          <div class="redes-sociales">
+            <h4>Síguenos en:</h4>
+            <div class="redes-icons">
+              @for (red of redesSociales; track red.nombre) {
+                <a [href]="red.url" target="_blank" class="red-social">
+                  <span class="red-icono">{{ red.icono }}</span>
+                  <span class="red-nombre">{{ red.nombre }}</span>
+                </a>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mapa -->
+      <div class="mapa-section">
+        <div class="mapa-card">
+          <h3>Ubicación</h3>
+          <div class="mapa-container">
+            <iframe
+              [src]="getSafeUrl()"
+              width="100%"
+              height="450"
+              style="border:0; border-radius: 16px;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+          <button class="btn-primary btn-maps" (click)="abrirMaps()" style="margin-top: 1rem; width: 100%;">
+            🗺️ Abrir en Google Maps
+          </button>
+        </div>
+
+        <!-- Formulario de Contacto -->
+        <div class="form-card">
+          <h3>Envíanos un mensaje</h3>
+          <form class="contacto-form">
+            <div class="form-group">
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" placeholder="Tu nombre">
+            </div>
+
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" placeholder="Tu teléfono">
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" placeholder="tu@email.com">
+            </div>
+
+            <div class="form-group">
+              <label for="mensaje">Mensaje</label>
+              <textarea id="mensaje" rows="4" placeholder="Cuéntanos sobre tu mascota y el servicio que necesitas..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">Enviar Mensaje</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,101 @@
+<section class="galeria">
+  <div class="container">
+    <div class="section-header">
+      <h1>Galería de Clientes</h1>
+      <p>Mira cómo dejamos a nuestros adorables clientes</p>
+    </div>
+
+    <div class="filtros">
+      <div class="filtro-grupo">
+        <label>Filtrar por raza:</label>
+        <div class="filtro-buttons">
+          @for (raza of razasDisponibles(); track raza) {
+            <button
+              class="filtro-btn"
+              [class.active]="filtroRaza() === raza"
+              (click)="cambiarFiltroRaza(raza)">
+              {{ raza }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="filtro-grupo">
+        <label>Filtrar por sexo:</label>
+        <div class="filtro-buttons">
+          <button
+            class="filtro-btn"
+            [class.active]="filtroSexo() === 'todos'"
+            (click)="cambiarFiltroSexo('todos')">
+            Todos
+          </button>
+          <button
+            class="filtro-btn"
+            [class.active]="filtroSexo() === 'macho'"
+            (click)="cambiarFiltroSexo('macho')">
+            Machos
+          </button>
+          <button
+            class="filtro-btn"
+            [class.active]="filtroSexo() === 'hembra'"
+            (click)="cambiarFiltroSexo('hembra')">
+            Hembras
+          </button>
+        </div>
+      </div>
+
+      <button class="btn-secondary" (click)="limpiarFiltros()">
+        Limpiar Filtros
+      </button>
+    </div>
+
+    <div class="galeria-grid">
+      @if (fotosFiltradas().length > 0) {
+        @for (foto of fotosFiltradas(); track foto.id) {
+          <div class="foto-card" (click)="abrirModal(foto)">
+            <div class="foto-imagen">
+              <img [src]="foto.url" [alt]="foto.nombre">
+              <div class="foto-overlay">
+                <div class="foto-info">
+                  <h4>{{ foto.nombre }}</h4>
+                  <p>{{ foto.raza }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="foto-detalles">
+              <div class="detalle-item">
+                <span class="icono">{{ foto.sexo === 'macho' ? '♂️' : '♀️' }}</span>
+                <span>{{ foto.sexo === 'macho' ? 'Macho' : 'Hembra' }}</span>
+              </div>
+              @if (foto.descripcion) {
+                <p class="descripcion">{{ foto.descripcion }}</p>
+              }
+            </div>
+          </div>
+        }
+      } @else {
+        <div class="no-resultados">
+          <p>No se encontraron fotos con los filtros seleccionados</p>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Modal para ver foto en grande -->
+  @if (fotoSeleccionada()) {
+    <div class="modal-overlay" (click)="cerrarModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="modal-close" (click)="cerrarModal()">×</button>
+        <img [src]="fotoSeleccionada()!.url" [alt]="fotoSeleccionada()!.nombre">
+        <div class="modal-info">
+          <h3>{{ fotoSeleccionada()!.nombre }}</h3>
+          <p><strong>Raza:</strong> {{ fotoSeleccionada()!.raza }}</p>
+          <p><strong>Sexo:</strong> {{ fotoSeleccionada()!.sexo === 'macho' ? 'Macho ♂️' : 'Hembra ♀️' }}</p>
+          @if (fotoSeleccionada()!.descripcion) {
+            <p><strong>Servicio:</strong> {{ fotoSeleccionada()!.descripcion }}</p>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</section>

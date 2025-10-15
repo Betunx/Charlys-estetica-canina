@@ -1,0 +1,84 @@
+<section class="servicios">
+  <div class="container">
+    <div class="section-header">
+      <h1>Nuestros Servicios</h1>
+      <p>Selecciona los servicios que necesitas y el tamaño de tu mascota para obtener una cotización</p>
+    </div>
+
+    <div class="servicios-grid">
+      <div class="servicios-lista">
+        <h3>Servicios Disponibles</h3>
+        <div class="servicios-cards">
+          @for (servicio of servicios; track servicio.id) {
+            <div
+              class="servicio-card"
+              [class.selected]="isServicioSeleccionado(servicio.id)"
+              (click)="toggleServicio(servicio.id)">
+              <div class="servicio-icono">{{ servicio.icono }}</div>
+              <div class="servicio-info">
+                <h4>{{ servicio.nombre }}</h4>
+                <p class="precio-base">Desde ${{ servicio.precio }}</p>
+              </div>
+              <div class="check-mark">
+                @if (isServicioSeleccionado(servicio.id)) {
+                  <span>✓</span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="cotizador">
+        <div class="cotizador-card">
+          <h3>Cotizador</h3>
+
+          <div class="tamano-selector">
+            <label>Tamaño de tu mascota:</label>
+            <div class="tamano-options">
+              @for (tamano of tamanos; track tamano.id) {
+                <label class="radio-option">
+                  <input
+                    type="radio"
+                    name="tamano"
+                    [value]="tamano.id"
+                    [(ngModel)]="tamanoSeleccionado"
+                    (ngModelChange)="tamanoSeleccionado.set($event)">
+                  <span class="radio-label">{{ tamano.nombre }}</span>
+                </label>
+              }
+            </div>
+          </div>
+
+          <div class="resumen">
+            <h4>Resumen</h4>
+            @if (serviciosSeleccionados().length > 0) {
+              <div class="servicios-seleccionados">
+                @for (id of serviciosSeleccionados(); track id) {
+                  @if (getServicioById(id); as servicio) {
+                    <div class="item-resumen">
+                      <span>{{ servicio.icono }} {{ servicio.nombre }}</span>
+                      <span>${{ servicio.precio }}</span>
+                    </div>
+                  }
+                }
+              </div>
+              <div class="multiplicador">
+                <span>Multiplicador ({{ getTamanoActual()?.nombre }}):</span>
+                <span>x{{ getTamanoActual()?.multiplicador }}</span>
+              </div>
+              <div class="total">
+                <span>Total:</span>
+                <span class="total-precio">${{ total().toFixed(2) }}</span>
+              </div>
+              <button class="btn-primary btn-agendar">Agendar Cita</button>
+              <button class="btn-secondary" (click)="limpiarSeleccion()">Limpiar</button>
+            } @else {
+              <p class="empty-message">Selecciona los servicios que necesitas</p>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
