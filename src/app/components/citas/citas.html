@@ -84,37 +84,156 @@
               }) }}
             </p>
 
-            <div class="horas-grid">
-              @for (hora of diaSeleccionado()!.horas; track hora) {
-                <button
-                  class="hora-btn"
-                  [class.hora-seleccionada]="horaSeleccionada() === hora"
-                  (click)="seleccionarHora(hora)"
-                >
-                  {{ hora }}
-                </button>
-              }
-            </div>
+            <!-- Mensaje de carga -->
+            @if (cargando()) {
+              <div class="loading">
+                <div class="spinner"></div>
+                <p>Cargando horarios disponibles...</p>
+              </div>
+            }
 
-            @if (horaSeleccionada()) {
-              <div class="confirmacion">
-                <div class="resumen-cita">
-                  <h4>Resumen de tu cita</h4>
-                  <p>
-                    <strong>Fecha:</strong>
-                    {{ diaSeleccionado()!.fecha.toLocaleDateString('es-MX', {
-                      weekday: 'long',
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric'
-                    }) }}
-                  </p>
-                  <p><strong>Hora:</strong> {{ horaSeleccionada() }}</p>
-                </div>
+            <!-- Horarios disponibles -->
+            @if (!cargando() && getHorasDisponibles().length > 0) {
+              <div class="horas-grid">
+                @for (hora of getHorasDisponibles(); track hora) {
+                  <button
+                    class="hora-btn"
+                    [class.hora-seleccionada]="horaSeleccionada() === hora"
+                    (click)="seleccionarHora(hora)"
+                  >
+                    {{ hora }}
+                  </button>
+                }
+              </div>
+            }
 
-                <button class="btn-primary btn-agendar" (click)="agendarCita()">
-                  Confirmar por WhatsApp
-                </button>
+            <!-- Sin horarios disponibles -->
+            @if (!cargando() && getHorasDisponibles().length === 0) {
+              <div class="sin-horarios">
+                <p>⚠️ No hay horarios disponibles para este día</p>
+                <p class="texto-pequeno">Por favor selecciona otro día</p>
+              </div>
+            }
+
+            <!-- Formulario de cita -->
+            @if (horaSeleccionada() && mostrarFormulario()) {
+              <div class="formulario-cita">
+                <h4>Completa tus datos</h4>
+
+                <!-- Mensajes -->
+                @if (mensajeExito()) {
+                  <div class="mensaje-exito">
+                    ✓ {{ mensajeExito() }}
+                  </div>
+                }
+
+                @if (mensajeError()) {
+                  <div class="mensaje-error">
+                    ⚠ {{ mensajeError() }}
+                  </div>
+                }
+
+                <form (ngSubmit)="agendarCita()" #citaForm="ngForm">
+                  <div class="form-group">
+                    <label for="nombreCliente">Tu nombre *</label>
+                    <input
+                      type="text"
+                      id="nombreCliente"
+                      name="nombreCliente"
+                      [(ngModel)]="formularioCita.nombreCliente"
+                      required
+                      minlength="3"
+                      placeholder="Ej: Juan Pérez"
+                      [disabled]="cargando()"
+                    >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="telefono">Teléfono *</label>
+                    <input
+                      type="tel"
+                      id="telefono"
+                      name="telefono"
+                      [(ngModel)]="formularioCita.telefono"
+                      required
+                      pattern="[0-9]{10}"
+                      placeholder="Ej: 6621949884"
+                      [disabled]="cargando()"
+                    >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="emailCliente">Email (opcional)</label>
+                    <input
+                      type="email"
+                      id="emailCliente"
+                      name="emailCliente"
+                      [(ngModel)]="formularioCita.emailCliente"
+                      placeholder="Ej: tu@email.com"
+                      [disabled]="cargando()"
+                    >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="nombreMascota">Nombre de tu mascota *</label>
+                    <input
+                      type="text"
+                      id="nombreMascota"
+                      name="nombreMascota"
+                      [(ngModel)]="formularioCita.nombreMascota"
+                      required
+                      minlength="2"
+                      placeholder="Ej: Max"
+                      [disabled]="cargando()"
+                    >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="servicio">Servicio *</label>
+                    <select
+                      id="servicio"
+                      name="servicio"
+                      [(ngModel)]="formularioCita.servicio"
+                      required
+                      [disabled]="cargando()"
+                    >
+                      <option value="">Selecciona un servicio</option>
+                      @for (servicio of serviciosDisponibles; track servicio) {
+                        <option [value]="servicio">{{ servicio }}</option>
+                      }
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="notas">Notas adicionales (opcional)</label>
+                    <textarea
+                      id="notas"
+                      name="notas"
+                      [(ngModel)]="formularioCita.notas"
+                      rows="3"
+                      placeholder="Ej: Mi perro es nervioso con las tijeras"
+                      [disabled]="cargando()"
+                    ></textarea>
+                  </div>
+
+                  <div class="resumen-seleccion">
+                    <h5>Resumen de tu cita:</h5>
+                    <p><strong>📅 Fecha:</strong> {{ diaSeleccionado()!.fecha.toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) }}</p>
+                    <p><strong>🕐 Hora:</strong> {{ horaSeleccionada() }}</p>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="btn-primary btn-agendar"
+                    [disabled]="!citaForm.form.valid || cargando()"
+                  >
+                    @if (cargando()) {
+                      <span>Agendando...</span>
+                    } @else {
+                      <span>Confirmar Cita</span>
+                    }
+                  </button>
+                </form>
               </div>
             }
           </div>

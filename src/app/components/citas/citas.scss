@@ -254,6 +254,46 @@
       text-transform: capitalize;
     }
 
+    .loading {
+      text-align: center;
+      padding: 2rem;
+
+      .spinner {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 1rem;
+        border: 4px solid var(--beige-light);
+        border-top: 4px solid var(--primary-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      p {
+        color: var(--text-gray);
+        font-size: 0.95rem;
+      }
+    }
+
+    .sin-horarios {
+      text-align: center;
+      padding: 2rem;
+      background: var(--beige-light);
+      border-radius: 16px;
+      margin-bottom: 1.5rem;
+
+      p {
+        margin: 0.5rem 0;
+        color: var(--text-dark);
+        font-weight: 600;
+
+        &.texto-pequeno {
+          font-size: 0.9rem;
+          font-weight: 400;
+          color: var(--text-gray);
+        }
+      }
+    }
+
     .horas-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -321,5 +361,154 @@
       padding: 1rem 2rem;
       font-size: 1.125rem;
     }
+  }
+
+  .formulario-cita {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--beige-light);
+    border-radius: 16px;
+
+    h4 {
+      color: var(--primary-dark);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-size: 1.25rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+
+      label {
+        display: block;
+        color: var(--text-dark);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 2px solid var(--beige-dark);
+        border-radius: 12px;
+        font-size: 1rem;
+        font-family: 'Nunito', sans-serif;
+        transition: all 0.3s ease;
+        background: var(--white);
+
+        &:focus {
+          outline: none;
+          border-color: var(--primary-color);
+          box-shadow: 0 0 0 3px var(--primary-pale);
+        }
+
+        &:disabled {
+          background: var(--beige-light);
+          cursor: not-allowed;
+          opacity: 0.6;
+        }
+
+        &::placeholder {
+          color: var(--text-gray);
+          opacity: 0.7;
+        }
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      select {
+        cursor: pointer;
+      }
+    }
+
+    .resumen-seleccion {
+      background: var(--white);
+      padding: 1.25rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      border: 2px solid var(--primary-pale);
+
+      h5 {
+        color: var(--primary-dark);
+        margin-bottom: 0.75rem;
+        font-size: 1rem;
+      }
+
+      p {
+        margin: 0.5rem 0;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+        text-transform: capitalize;
+
+        strong {
+          color: var(--primary-dark);
+          font-weight: 700;
+        }
+      }
+    }
+
+    .btn-agendar {
+      width: 100%;
+      padding: 1rem 2rem;
+      font-size: 1.125rem;
+      font-weight: 700;
+      background: var(--primary-color);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px var(--shadow);
+
+      &:hover:not(:disabled) {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px var(--shadow-dark);
+      }
+
+      &:disabled {
+        background: var(--beige-dark);
+        cursor: not-allowed;
+        opacity: 0.6;
+        transform: none;
+      }
+    }
+  }
+
+  .mensaje-exito {
+    background: #d4edda;
+    color: #155724;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    border: 2px solid #c3e6cb;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .mensaje-error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    border: 2px solid #f5c6cb;
+    font-weight: 600;
+    text-align: center;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

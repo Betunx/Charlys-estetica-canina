@@ -1,5 +1,7 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CitasService, type Cita } from '../../services/citas.service';
 
 interface DiaCalendario {
   numero: number;
@@ -10,31 +12,53 @@ interface DiaCalendario {
 
 @Component({
   selector: 'app-citas',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './citas.html',
   styleUrl: './citas.scss'
 })
-export class Citas {
+export class Citas implements OnInit {
+  private citasService = inject(CitasService);
+
   protected readonly mesActual = signal(new Date().getMonth());
   protected readonly anioActual = signal(new Date().getFullYear());
   protected readonly diaSeleccionado = signal<DiaCalendario | null>(null);
   protected readonly horaSeleccionada = signal<string | null>(null);
+  protected readonly cargando = signal(false);
+  protected readonly mostrarFormulario = signal(false);
+  protected readonly mensajeExito = signal<string | null>(null);
+  protected readonly mensajeError = signal<string | null>(null);
 
-  // Horarios de atención (Lunes a Sábado 9:00 AM - 5:00 PM)
+  // Datos del formulario
+  protected formularioCita = {
+    nombreCliente: '',
+    telefono: '',
+    emailCliente: '',
+    nombreMascota: '',
+    servicio: '',
+    notas: ''
+  };
+
+  protected serviciosDisponibles = [
+    'Baño y corte',
+    'Corte de pelo',
+    'Baño medicado',
+    'Limpieza dental',
+    'Corte de uñas',
+    'Otro'
+  ];
+
+  // Horarios de atención
   private readonly horarioAtencion = [
-    { dia: 1, horas: '9:00 AM - 5:00 PM' }, // Lunes
-    { dia: 2, horas: '9:00 AM - 5:00 PM' }, // Martes
-    { dia: 3, horas: '9:00 AM - 5:00 PM' }, // Miércoles
-    { dia: 4, horas: '9:00 AM - 5:00 PM' }, // Jueves
-    { dia: 5, horas: '9:00 AM - 5:00 PM' }, // Viernes
-    { dia: 6, horas: '9:00 AM - 5:00 PM' }, // Sábado
+    { dia: 1, horas: '9:00 AM - 5:00 PM' },
+    { dia: 2, horas: '9:00 AM - 5:00 PM' },
+    { dia: 3, horas: '9:00 AM - 5:00 PM' },
+    { dia: 4, horas: '9:00 AM - 5:00 PM' },
+    { dia: 5, horas: '9:00 AM - 5:00 PM' },
+    { dia: 6, horas: '9:00 AM - 5:00 PM' }
   ];
 
-  private readonly horasDisponibles = [
-    '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
-    '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM',
-    '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM'
-  ];
+  private horasDisponibles: string[] = [];
+  private disponibilidadMes = signal<Map<string, any>>(new Map());
 
   protected readonly nombreMes = computed(() => {
     const fecha = new Date(this.anioActual(), this.mesActual(), 1);
@@ -45,6 +69,7 @@ export class Citas {
     const primerDia = new Date(this.anioActual(), this.mesActual(), 1);
     const ultimoDia = new Date(this.anioActual(), this.mesActual() + 1, 0);
     const dias: DiaCalendario[] = [];
+    const disponibilidad = this.disponibilidadMes();
 
     // Días vacíos al inicio
     const diaSemanaPrimerDia = primerDia.getDay();
@@ -59,40 +84,64 @@ export class Citas {
     // Días del mes
     for (let dia = 1; dia <= ultimoDia.getDate(); dia++) {
       const fecha = new Date(this.anioActual(), this.mesActual(), dia);
+      const fechaStr = this.formatearFecha(fecha);
       const diaSemana = fecha.getDay();
 
-      // Determinar disponibilidad (simulada para el ejemplo)
-      let disponibilidad: 'disponible' | 'medio' | 'lleno' | 'cerrado' = 'cerrado';
+      let disponibilidadDia: 'disponible' | 'medio' | 'lleno' | 'cerrado' = 'cerrado';
 
+      // Días pasados
+      const hoy = new Date();
+      hoy.setHours(0, 0, 0, 0);
+      if (fecha < hoy) {
+        disponibilidadDia = 'cerrado';
+      }
       // Domingo cerrado
-      if (diaSemana === 0) {
-        disponibilidad = 'cerrado';
-      } else if (this.horarioAtencion.some(h => h.dia === diaSemana)) {
-        // Simulación de disponibilidad (en producción vendría de un backend)
-        const random = Math.random();
-        if (fecha < new Date()) {
-          disponibilidad = 'cerrado'; // Días pasados
-        } else if (random > 0.7) {
-          disponibilidad = 'disponible';
-        } else if (random > 0.4) {
-          disponibilidad = 'medio';
-        } else {
-          disponibilidad = 'lleno';
-        }
+      else if (diaSemana === 0) {
+        disponibilidadDia = 'cerrado';
+      }
+      // Obtener disponibilidad del servicio
+      else if (disponibilidad.has(fechaStr)) {
+        disponibilidadDia = disponibilidad.get(fechaStr).disponibilidad;
+      }
+      // Si no hay datos, asumir disponible
+      else if (this.horarioAtencion.some(h => h.dia === diaSemana)) {
+        disponibilidadDia = 'disponible';
       }
 
       dias.push({
         numero: dia,
-        disponibilidad,
+        disponibilidad: disponibilidadDia,
         fecha,
-        horas: disponibilidad !== 'cerrado' && disponibilidad !== 'lleno'
-          ? this.horasDisponibles
+        horas: disponibilidadDia !== 'cerrado' && disponibilidadDia !== 'lleno'
+          ? []
           : []
       });
     }
 
     return dias;
   });
+
+  ngOnInit(): void {
+    this.cargarDisponibilidad();
+  }
+
+  cargarDisponibilidad(): void {
+    this.cargando.set(true);
+    this.citasService.getDisponibilidadMes(this.anioActual(), this.mesActual()).subscribe({
+      next: (disponibilidad) => {
+        const mapa = new Map();
+        disponibilidad.forEach(d => {
+          mapa.set(d.fecha, d);
+        });
+        this.disponibilidadMes.set(mapa);
+        this.cargando.set(false);
+      },
+      error: (error) => {
+        console.error('Error al cargar disponibilidad:', error);
+        this.cargando.set(false);
+      }
+    });
+  }
 
   mesAnterior(): void {
     if (this.mesActual() === 0) {
@@ -103,6 +152,8 @@ export class Citas {
     }
     this.diaSeleccionado.set(null);
     this.horaSeleccionada.set(null);
+    this.mostrarFormulario.set(false);
+    this.cargarDisponibilidad();
   }
 
   mesSiguiente(): void {
@@ -114,36 +165,106 @@ export class Citas {
     }
     this.diaSeleccionado.set(null);
     this.horaSeleccionada.set(null);
+    this.mostrarFormulario.set(false);
+    this.cargarDisponibilidad();
   }
 
   seleccionarDia(dia: DiaCalendario): void {
     if (dia.numero > 0 && dia.disponibilidad !== 'cerrado' && dia.disponibilidad !== 'lleno') {
       this.diaSeleccionado.set(dia);
       this.horaSeleccionada.set(null);
+      this.mostrarFormulario.set(false);
+      this.cargarHorariosDisponibles(dia.fecha);
     }
+  }
+
+  cargarHorariosDisponibles(fecha: Date): void {
+    const fechaStr = this.formatearFecha(fecha);
+    this.cargando.set(true);
+
+    this.citasService.getHorariosDisponibles(fechaStr).subscribe({
+      next: (horarios) => {
+        this.horasDisponibles = horarios;
+        this.cargando.set(false);
+      },
+      error: (error) => {
+        console.error('Error al cargar horarios:', error);
+        this.horasDisponibles = [];
+        this.cargando.set(false);
+      }
+    });
   }
 
   seleccionarHora(hora: string): void {
     this.horaSeleccionada.set(hora);
+    this.mostrarFormulario.set(true);
+    this.mensajeExito.set(null);
+    this.mensajeError.set(null);
+  }
+
+  getHorasDisponibles(): string[] {
+    return this.horasDisponibles;
   }
 
   agendarCita(): void {
-    if (this.diaSeleccionado() && this.horaSeleccionada()) {
-      const dia = this.diaSeleccionado()!;
-      const hora = this.horaSeleccionada()!;
-      const fecha = dia.fecha.toLocaleDateString('es-MX', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-
-      const mensaje = encodeURIComponent(
-        `Hola! Me gustaría agendar una cita para el ${fecha} a las ${hora}`
-      );
-
-      window.open(`https://wa.me/5216621949884?text=${mensaje}`, '_blank');
+    if (!this.diaSeleccionado() || !this.horaSeleccionada()) {
+      this.mensajeError.set('Por favor selecciona un día y una hora');
+      return;
     }
+
+    const cita: Cita = {
+      fecha: this.formatearFecha(this.diaSeleccionado()!.fecha),
+      hora: this.horaSeleccionada()!,
+      nombreCliente: this.formularioCita.nombreCliente,
+      telefono: this.formularioCita.telefono,
+      emailCliente: this.formularioCita.emailCliente,
+      nombreMascota: this.formularioCita.nombreMascota,
+      servicio: this.formularioCita.servicio,
+      notas: this.formularioCita.notas,
+      estado: 'Pendiente'
+    };
+
+    // Validar cita
+    const validacion = this.citasService.validarCita(cita);
+    if (!validacion.valida) {
+      this.mensajeError.set(validacion.errores.join('. '));
+      return;
+    }
+
+    this.cargando.set(true);
+    this.mensajeError.set(null);
+
+    this.citasService.crearCita(cita).subscribe({
+      next: (response) => {
+        this.mensajeExito.set('¡Cita agendada exitosamente! Te contactaremos pronto.');
+        this.limpiarFormulario();
+        this.cargando.set(false);
+
+        // Recargar disponibilidad
+        setTimeout(() => {
+          this.cargarDisponibilidad();
+        }, 1000);
+      },
+      error: (error) => {
+        this.mensajeError.set('Hubo un error al agendar la cita. Por favor intenta de nuevo o contáctanos por WhatsApp.');
+        this.cargando.set(false);
+        console.error('Error:', error);
+      }
+    });
+  }
+
+  limpiarFormulario(): void {
+    this.formularioCita = {
+      nombreCliente: '',
+      telefono: '',
+      emailCliente: '',
+      nombreMascota: '',
+      servicio: '',
+      notas: ''
+    };
+    this.diaSeleccionado.set(null);
+    this.horaSeleccionada.set(null);
+    this.mostrarFormulario.set(false);
   }
 
   obtenerClaseDia(dia: DiaCalendario): string {
@@ -157,5 +278,12 @@ export class Citas {
     }
 
     return clases.join(' ');
+  }
+
+  private formatearFecha(fecha: Date): string {
+    const año = fecha.getFullYear();
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+    const dia = String(fecha.getDate()).padStart(2, '0');
+    return `${año}-${mes}-${dia}`;
   }
 }
