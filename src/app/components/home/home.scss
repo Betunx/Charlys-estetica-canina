@@ -57,6 +57,14 @@
     justify-content: center;
     align-items: center;
 
+    .hero-logo {
+      max-width: 450px;
+      width: 100%;
+      height: auto;
+      animation: float 3s ease-in-out infinite;
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+    }
+
     .hero-placeholder {
       width: 400px;
       height: 400px;
@@ -81,10 +89,23 @@
   }
 }
 
-/* Características */
+/* Caracterï¿½sticas */
 .caracteristicas {
   padding: 5rem 0;
   background: white;
+
+  .caracteristicas-header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    .charlys-logo {
+      max-width: 350px;
+      height: auto;
+      margin: 0 auto 2rem;
+      display: block;
+      filter: drop-shadow(0 4px 12px var(--shadow));
+    }
+  }
 
   .section-title {
     text-align: center;
@@ -282,6 +303,10 @@
     }
 
     .hero-image {
+      .hero-logo {
+        max-width: 350px;
+      }
+
       .hero-placeholder {
         width: 300px;
         height: 300px;
@@ -326,10 +351,22 @@
     }
 
     .hero-image {
+      .hero-logo {
+        max-width: 280px;
+      }
+
       .hero-placeholder {
         width: 250px;
         height: 250px;
         font-size: 10rem;
+      }
+    }
+  }
+
+  .caracteristicas {
+    .caracteristicas-header {
+      .charlys-logo {
+        max-width: 250px;
       }
     }
   }
@@ -380,10 +417,22 @@
     }
 
     .hero-image {
+      .hero-logo {
+        max-width: 220px;
+      }
+
       .hero-placeholder {
         width: 200px;
         height: 200px;
         font-size: 8rem;
+      }
+    }
+  }
+
+  .caracteristicas {
+    .caracteristicas-header {
+      .charlys-logo {
+        max-width: 200px;
       }
     }
   }

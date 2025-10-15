@@ -13,8 +13,10 @@
         <h4>Enlaces Rápidos</h4>
         <ul class="footer-links">
           <li><a routerLink="/">Inicio</a></li>
+          <li><a routerLink="/nosotros">Nosotros</a></li>
           <li><a routerLink="/servicios">Servicios</a></li>
           <li><a routerLink="/galeria">Galería</a></li>
+          <li><a routerLink="/citas">Agendar Cita</a></li>
           <li><a routerLink="/contacto">Contacto</a></li>
         </ul>
       </div>
@@ -22,19 +24,22 @@
       <div class="footer-section">
         <h4>Contacto</h4>
         <ul class="footer-contact">
-          <li>📍 Calle Principal #123</li>
-          <li>📞 +52 123 456 7890</li>
-          <li>📧 info@charlysmascotas.com</li>
-          <li>🕒 Lun-Vie: 9:00 AM - 7:00 PM</li>
+          <li>📍 {{ contacto.direccion }}</li>
+          <li>{{ contacto.ciudad }}</li>
+          <li>📞 {{ contacto.telefono }}</li>
+          <li>📧 {{ contacto.email }}</li>
+          <li>🕒 {{ contacto.horario }}</li>
         </ul>
       </div>
 
       <div class="footer-section">
         <h4>Síguenos</h4>
         <div class="social-links">
-          <a href="https://facebook.com" target="_blank" class="social-link">📘</a>
-          <a href="https://instagram.com" target="_blank" class="social-link">📷</a>
-          <a href="https://wa.me/5212345678901" target="_blank" class="social-link">💬</a>
+          @for (red of redesSociales; track red.nombre) {
+            <a [href]="red.url" target="_blank" class="social-link" [title]="red.nombre">
+              {{ red.icono }}
+            </a>
+          }
         </div>
       </div>
     </div>

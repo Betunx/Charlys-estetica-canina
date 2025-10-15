@@ -54,7 +54,7 @@
     }
 
     .btn-mes {
-      background: var(--beige-light);
+      background: var(--secondary-color);
       border: none;
       width: 40px;
       height: 40px;
@@ -65,10 +65,11 @@
       justify-content: center;
       transition: all 0.3s ease;
       font-size: 1.25rem;
-      color: var(--primary-dark);
+      color: var(--primary-color);
 
       &:hover {
-        background: var(--primary-light);
+        background: var(--primary-color);
+        color: var(--white);
         transform: scale(1.1);
       }
     }
@@ -125,7 +126,7 @@
       }
 
       &.dia-disponible {
-        background: var(--pastel-mint);
+        background: var(--primary-pale);
         color: var(--text-dark);
 
         &:hover {
@@ -135,7 +136,7 @@
       }
 
       &.dia-medio {
-        background: var(--pastel-peach);
+        background: var(--blue-light);
         color: var(--text-dark);
 
         &:hover {
@@ -187,11 +188,11 @@
         border-radius: 8px;
 
         &.dia-disponible {
-          background: var(--pastel-mint);
+          background: var(--primary-pale);
         }
 
         &.dia-medio {
-          background: var(--pastel-peach);
+          background: var(--blue-light);
         }
 
         &.dia-lleno {
@@ -261,7 +262,7 @@
 
       .hora-btn {
         padding: 0.875rem 1rem;
-        background: var(--beige-light);
+        background: var(--secondary-color);
         border: 2px solid transparent;
         border-radius: 16px;
         font-weight: 600;
@@ -271,7 +272,8 @@
         font-size: 0.9rem;
 
         &:hover {
-          background: var(--primary-light);
+          background: var(--primary-pale);
+          border-color: var(--primary-light);
           transform: translateY(-2px);
         }
 

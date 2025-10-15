@@ -1,24 +1,41 @@
-/* Variables de colores - Paleta Charly's Estética Canina - Friendly & Pastel */
+/* Variables de colores - Paleta Charly's Estética Canina - Teal & Fresh */
 :root {
-  --primary-color: #FFB5A7;
-  --primary-light: #FDD5C3;
-  --primary-dark: #F89D8C;
-  --secondary-color: #FFF4E6;
-  --secondary-dark: #E8D8C4;
-  --secondary-light: #FFFBF5;
-  --beige-light: #F5EBE0;
-  --beige: #E3D5CA;
-  --beige-dark: #D5BDAF;
-  --pastel-blue: #C7CEEA;
-  --pastel-mint: #B5EAD7;
-  --pastel-peach: #FFDAC1;
-  --text-dark: #5D4E37;
-  --text-light: #ffffff;
-  --text-gray: #8B7E74;
-  --accent: #FFC8DD;
-  --shadow: rgba(255, 181, 167, 0.15);
-  --shadow-dark: rgba(255, 181, 167, 0.25);
+  --primary-color: #027878;
+  --primary-light: #039999;
+  --primary-dark: #015656;
+  --primary-lighter: #04B4B4;
+  --primary-pale: #B3E5E5;
+
+  --secondary-color: #E8F4F4;
+  --secondary-dark: #D1E8E8;
+  --secondary-light: #F5FAFA;
+
+  --beige-light: #F5F3F0;
+  --beige: #E8E4E0;
+  --beige-dark: #D4CFC8;
+
+  --blue-light: #E3F2FD;
+  --blue: #90CAF9;
+  --blue-dark: #42A5F5;
+
   --white: #FFFFFF;
+  --off-white: #FAFAFA;
+
+  --text-dark: #1a2930;
+  --text-light: #ffffff;
+  --text-gray: #5f6368;
+  --text-muted: #8a9199;
+
+  --accent: #04a9a9;
+  --accent-light: #66d9d9;
+
+  --success: #4CAF50;
+  --warning: #FF9800;
+  --error: #F44336;
+
+  --shadow: rgba(2, 120, 120, 0.12);
+  --shadow-dark: rgba(2, 120, 120, 0.2);
+  --shadow-light: rgba(2, 120, 120, 0.06);
 }
 
 /* Reset y estilos globales */
@@ -101,7 +118,7 @@ button {
 
 .btn-secondary {
   background-color: var(--white);
-  color: var(--primary-dark);
+  color: var(--primary-color);
   padding: 0.875rem 2rem;
   border-radius: 50px;
   font-weight: 600;
@@ -110,9 +127,9 @@ button {
 }
 
 .btn-secondary:hover {
-  background-color: var(--primary-light);
-  color: var(--primary-dark);
-  border-color: var(--primary-dark);
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-color: var(--primary-color);
 }
 
 /* Container */

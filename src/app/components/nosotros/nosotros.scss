@@ -25,7 +25,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, rgba(255, 181, 167, 0.7), rgba(197, 206, 234, 0.6));
+        background: linear-gradient(135deg, rgba(2, 120, 120, 0.85), rgba(3, 153, 153, 0.75));
       }
     }
 
@@ -199,7 +199,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--pastel-blue) 100%);
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--blue-light) 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -275,7 +275,7 @@
               box-shadow: 0 8px 24px var(--shadow-dark);
 
               .certificado-overlay {
-                background: rgba(255, 181, 167, 0.75);
+                background: rgba(2, 120, 120, 0.75);
               }
             }
 
@@ -293,7 +293,7 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(255, 181, 167, 0.85);
+                background: rgba(2, 120, 120, 0.85);
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -323,7 +323,7 @@
     }
 
     .mensaje-especial {
-      background: linear-gradient(135deg, var(--pastel-peach) 0%, var(--pastel-mint) 100%);
+      background: linear-gradient(135deg, var(--primary-pale) 0%, var(--blue-light) 100%);
       border-radius: 32px;
       padding: 3rem;
       box-shadow: 0 6px 28px var(--shadow);
@@ -364,7 +364,7 @@
   // CTA Section
   .cta-section {
     padding: 5rem 0;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--pastel-blue) 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--blue-dark) 100%);
     text-align: center;
 
     .cta-content {

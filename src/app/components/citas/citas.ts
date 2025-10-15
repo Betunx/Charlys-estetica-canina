@@ -20,7 +20,7 @@ export class Citas {
   protected readonly diaSeleccionado = signal<DiaCalendario | null>(null);
   protected readonly horaSeleccionada = signal<string | null>(null);
 
-  // Horarios de atención (miércoles a sábado, lunes y martes)
+  // Horarios de atención (Lunes a Sábado 9:00 AM - 5:00 PM)
   private readonly horarioAtencion = [
     { dia: 1, horas: '9:00 AM - 5:00 PM' }, // Lunes
     { dia: 2, horas: '9:00 AM - 5:00 PM' }, // Martes
